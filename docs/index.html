@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | MarineUpbringing</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Arial', sans-serif;
+        overflow: hidden;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        color: #ffffff;
+        position: relative;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+          radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .main-container {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* Left side - WebGL */
+      .webgl-section {
+        height: 100vh;
+        width: calc(100vh * 2 / 3); /* 2:1 aspect ratio based on height */
+        position: relative;
+        background: linear-gradient(45deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+        border-right: 2px solid rgba(0, 255, 255, 0.3);
+        box-shadow: inset 0 0 50px rgba(0, 255, 255, 0.1);
+      }
+
+      #unity-container {
+        width: 100% !important;
+        height: 100% !important;
+        position: relative;
+      }
+
+      #unity-canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+      }
+
+      /* Right side - Portfolio */
+      .portfolio-section {
+        flex: 1;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(135deg, 
+          rgba(26, 26, 46, 0.95) 0%, 
+          rgba(22, 33, 62, 0.95) 50%, 
+          rgba(15, 15, 35, 0.95) 100%);
+        backdrop-filter: blur(10px);
+        border-left: 1px solid rgba(0, 255, 255, 0.2);
+      }
+
+      .creator-info {
+        background: linear-gradient(135deg, 
+          rgba(0, 255, 255, 0.1) 0%, 
+          rgba(120, 119, 198, 0.1) 50%, 
+          rgba(255, 119, 198, 0.1) 100%);
+        border-radius: 15px;
+        padding: 20px;
+        margin: 20px;
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        backdrop-filter: blur(15px);
+        box-shadow: 
+          0 0 20px rgba(0, 255, 255, 0.2),
+          inset 0 0 20px rgba(0, 255, 255, 0.05);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .creator-info::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+        animation: shimmer 3s infinite;
+      }
+
+      @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+      }
+
+      .creator-info h2 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        color: #00ffff;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .creator-info p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        color: #b0e0e6;
+        text-shadow: 0 0 5px rgba(176, 224, 230, 0.3);
+      }
+
+      .portfolio-top {
+        flex: 1;
+        padding: 20px;
+        border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+        overflow-y: auto;
+      }
+
+      .portfolio-bottom {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #00ffff;
+        text-shadow: 
+          0 0 10px rgba(0, 255, 255, 0.5),
+          0 0 20px rgba(0, 255, 255, 0.3);
+        letter-spacing: 2px;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          #00ffff 20%, 
+          #ff77c6 50%, 
+          #00ffff 80%, 
+          transparent 100%);
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      }
+
+      .notice-text {
+        background: linear-gradient(135deg, 
+          rgba(255, 0, 0, 0.1) 0%, 
+          rgba(255, 50, 50, 0.1) 100%);
+        color: #ff4444;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 0, 0, 0.3);
+        font-size: 0.9rem;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+        box-shadow: 
+          0 0 10px rgba(255, 0, 0, 0.2),
+          inset 0 0 10px rgba(255, 0, 0, 0.05);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { 
+          box-shadow: 
+            0 0 10px rgba(255, 0, 0, 0.2),
+            inset 0 0 10px rgba(255, 0, 0, 0.05);
+        }
+        50% { 
+          box-shadow: 
+            0 0 15px rgba(255, 0, 0, 0.4),
+            inset 0 0 15px rgba(255, 0, 0, 0.1);
+        }
+      }
+
+      .content-card {
+        background: linear-gradient(135deg, 
+          rgba(0, 255, 255, 0.05) 0%, 
+          rgba(120, 119, 198, 0.05) 50%, 
+          rgba(255, 119, 198, 0.05) 100%);
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        box-shadow: 
+          0 0 15px rgba(0, 255, 255, 0.1),
+          inset 0 0 15px rgba(0, 255, 255, 0.02);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .content-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+          0 5px 25px rgba(0, 255, 255, 0.2),
+          inset 0 0 20px rgba(0, 255, 255, 0.05);
+        border-color: rgba(0, 255, 255, 0.4);
+      }
+
+      .content-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          #00ffff 50%, 
+          transparent 100%);
+        opacity: 0.5;
+      }
+
+      .content-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: #00ffff;
+        text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .content-card p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        color: #e0f7fa;
+        text-shadow: 0 0 3px rgba(224, 247, 250, 0.2);
+      }
+
+      .content-card strong {
+        color: #ff77c6;
+        text-shadow: 0 0 5px rgba(255, 119, 198, 0.3);
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .tech-tag {
+        background: linear-gradient(135deg, 
+          rgba(0, 255, 255, 0.2) 0%, 
+          rgba(120, 119, 198, 0.2) 100%);
+        color: #00ffff;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        border: 1px solid rgba(0, 255, 255, 0.4);
+        box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+        text-shadow: 0 0 3px rgba(0, 255, 255, 0.5);
+        transition: all 0.3s ease;
+      }
+
+      .tech-tag:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+      }
+
+      /* Unity loading bar adjustments */
+      #unity-loading-bar {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+      }
+
+      #unity-footer {
+        display: none;
+      }
+
+      #unity-warning {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1001;
+      }
+
+      /* Scrollbar styling */
+      .portfolio-top::-webkit-scrollbar,
+      .portfolio-bottom::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .portfolio-top::-webkit-scrollbar-track,
+      .portfolio-bottom::-webkit-scrollbar-track {
+        background: rgba(0, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+
+      .portfolio-top::-webkit-scrollbar-thumb,
+      .portfolio-bottom::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #00ffff, #ff77c6);
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+      }
+
+      .portfolio-top::-webkit-scrollbar-thumb:hover,
+      .portfolio-bottom::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #ff77c6, #00ffff);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- Left side - WebGL -->
+      <div class="webgl-section">
+        <div id="unity-container" class="unity-desktop">
+          <canvas id="unity-canvas" tabindex="-1"></canvas>
+          <div id="unity-loading-bar">
+            <div id="unity-logo"></div>
+            <div id="unity-progress-bar-empty">
+              <div id="unity-progress-bar-full"></div>
+            </div>
+          </div>
+          <div id="unity-warning"> </div>
+          <div id="unity-footer">
+            <div id="unity-webgl-logo"></div>
+            <div id="unity-fullscreen-button"></div>
+            <div id="unity-build-title">MarineUpbringing</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side - Portfolio -->
+      <div class="portfolio-section">
+        <!-- Creator Info -->
+        
+
+        <!-- Notice Text -->
+      
+        <!-- Top section - Game Concept -->
+        <div class="portfolio-top">
+          <h1 class="section-title">🎮 게임 기획</h1>
+          <div class="creator-info">
+            <h2>제작자 : 송병근 (1인 개발)</h2>
+            <p>모바일을 목표로 둔 프로젝트로, 현 WebGL 환경에서는 오류가 발생할 수 있습니다.</p>
+            <p>개발되지 않은 요소가 많습니다. 양해 부탁드립니다.</p>
+          </div>
+          <div class="notice-text">
+            게임 기획의 '게임 플레이', '스킬 시스템'을 읽어보시고 플레이 해보시는 것을 강력 추천드립니다! (난이도 : 상)
+          </div>
+
+          
+          
+          
+          <div class="content-card">
+            <h3>📌 프로젝트 개요</h3>
+            <p><strong>개발자:</strong> 송병근 (개인 프로젝트)<br>
+            <strong>장르:</strong> 모바일 오펜스(적 뚫기)<br>
+            <strong>목적:</strong> 게임 개발자로서의 역량을 포트폴리오 형태로 보여주기 위한 토이 프로젝트<br>
+            <strong>참고 리소스:</strong> 컨셉 전달을 위해 스타크래프트 리소스 활용 (상용 아님)<br>
+            <strong>특이사항:</strong> 배경 타일은 통째로 사용 → 일부 상호작용 어색함 존재</p>
+          </div>
+
+          <div class="content-card">
+            <h3>🎮 게임 컨셉</h3>
+            <p>괴물로 가득한 낯선 행성에 도착한 플레이어.<br>
+            다양한 미션(보스 제거, 본거지 파괴, 시민 구출, 거점 방어 등)을 수행하며 행성을 정화해 나간다.<br><br>
+            목표는 적의 근거지를 뚫고 파괴하는 것.<br>
+            조작은 직관적이며, 스킬 활용과 전략적인 플레이를 요구한다.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>🕹 게임 플레이</h3>
+            <p><strong>조작 방식</strong><br>
+            • 가상 조이스틱 기반 이동<br>
+            • 조이스틱을 최대치로 당김 → 달리기 상태<br>
+            • 조이스틱을 최대치 이하로 이동 → 공격 가능 상태<br>
+            &nbsp;&nbsp;→ 움직이며 동시에 공격 가능<br><br>
+            <strong>승리 조건</strong><br>
+            • 모든 적 처치<br>
+            • 적의 본거지(예: 해처리)를 직접 폭파 또는 미사일 스킬로 파괴</p>
+          </div>
+
+          <div class="content-card">
+            <h3>⚔️ 스킬 시스템</h3>
+            <p><strong>스팀팩</strong><br>
+            • 공격 속도 및 이동 속도 증가<br>
+            • 동시에 두 마리의 적 공격 가능<br><br>
+            <strong>탈 것 소환</strong><br>
+            • 다수의 적에게 포위당했을 때 탈출용<br>
+            • 생존 및 위치 재정비에 유용<br><br>
+            <strong>미사일 지정</strong><br>
+            • 드래그 & 드롭으로 투하 지점 지정<br>
+            • 강력한 화력 + 광역 공격</p>
+          </div>
+
+          <div class="content-card">
+            <h3>💰 성장 요소</h3>
+            <p>게임 내 재화(골드 등)를 사용해:<br>
+            • 추가 스킬 해금<br>
+            • 유닛 업그레이드<br><br>
+            행성별로 다른 미션과 난이도 제공 → 반복 플레이 및 확장성 강화</p>
+          </div>
+
+          <div class="content-card">
+            <h3>🚀 확장성 / 특징</h3>
+            <p><strong>플레이 루프:</strong> 탐험 → 전투 → 미션 : 보스/본거지 파괴, 시민 구출, 거점 방어 등 → 보상 → 다음 행성<br><br>
+            <strong>전략적 선택:</strong> 탈 것(오토바이, 전투로봇), 생존 스킬(탈출, 버프)과 공격 스킬(광역 화력, 단일 대상 화력)을 상황에 맞게 활용<br><br>
+            <strong>확장 방향:</strong><br>
+            • 다양한 행성/맵 추가<br>
+            • 미션 추가<br>
+            • 플레이어 강화를 위한 여러 자원 채취<br>
+            • 적 AI 및 패턴 다양화<br>
+            • 멀티플레이 협동/대전 모드 고려 가능</p>
+          </div>
+        </div>
+
+        <!-- Bottom section - Development -->
+        <div class="portfolio-bottom">
+          
+          <h2 class="section-title">🎨 개발 특징</h2>
+          <div class="content-card">
+            <p><strong>1. 반응형 UI 구현</strong><br>
+            다양한 해상도와 화면 비율(16:9, 18:9)을 지원하기 위해 Canvas Scaler와 Anchoring을 활용하여 반응형 UI 설계.<br><br>
+            UI 요소를 HUD, 인터랙션, 팝업 등으로 구분하고, 각 그룹별 배치 및 크기를 독립적으로 최적화.<br><br>
+            이를 통해 디바이스에 관계없이 일관된 플레이 경험을 제공.</p>
+          </div>
+
+          
+          <h2 class="section-title">⚡ 최적화 기법</h2>
+          <div class="content-card"> 
+            <h3>1. 에셋 캐싱 & Addressables</h3>
+            <p>반복적으로 호출되는 애니메이션/이미지는 캐싱 처리하여 불필요한 디스크 접근 방지.<br><br>
+            Addressables 활용으로 "동적 로드 + 캐싱" 구조를 구축 → 성능과 확장성의 균형 확보.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Enemy Object Pooling</h3>
+            <p>적 유닛을 매번 Instantiate/Destroy 하지 않고, 사망 시 비활성화 후 풀에 보관.<br><br>
+            필요 시 풀에서 재사용 → GC(가비지 컬렉션) 최소화 및 CPU 부하 절감.<br><br>
+            실제 프로파일링 결과, 프레임 드랍 현저히 감소 확인.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. 거리 기반 적 비활성화</h3>
+            <p>플레이어 기준 일정 거리 밖의 적은 자동 비활성화.<br><br>
+            활성화 풀 / 비활성화 풀을 나눠 관리 → 물리 충돌, AI, 애니메이션 연산 최소화.<br><br>
+            대규모 전투 상황에서도 안정적 FPS 유지.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Queue 기반 사망 처리</h3>
+            <p>적이 다수 동시에 사망할 경우, 모든 이펙트를 한 프레임에 처리하면 프레임 드랍 발생.<br><br>
+            이를 방지하기 위해 Queue 처리 방식 도입 → 사망 연출을 프레임 단위로 분산 실행.<br><br>
+            결과적으로 프레임 타임 스파이크 완화.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>5. UI 캔버스 레이어링</h3>
+            <p>UI를 성격별로 나누어 Canvas Rebuild 최소화:<br><br>
+            <strong>Static:</strong> HUD, 고정 정보<br>
+            <strong>Changeable:</strong> 수치 변동 요소 (체력, 골드 등)<br>
+            <strong>Popup:</strong> 이벤트 발생 시에만 생성<br>
+            <strong>Interactable:</strong> 버튼 등 입력 요소<br><br>
+            불필요한 전체 Rebuild 방지로 렌더링 최적화.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>6. Prefab 역할 세분화</h3>
+            <p>프리팹을 목적에 따라 구체적으로 구분:<br><br>
+            <strong>Collision 전용</strong> (Physics)<br>
+            <strong>Sprite 전용</strong> (시각적 표현)<br>
+            <strong>Pathfinding 전용</strong> (경로 계산 AI)<br><br>
+            필요 시 동적으로 생성/해제 → 유지보수 용이 및 추후 기능 확장 대비.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>✅ 기대 효과 및 성과</h3>
+            <p><strong>실제 프로파일링 결과(모바일)</strong><br><br>
+            • CPU 사용량 안정화 (평균 6~10ms → 100FPS 이상 유지)<br>
+            • 메모리 점유율 ~220MB 수준 유지 (모바일에서도 무난)<br>
+            • GC Alloc 스파이크 최소화 (12KB 단위 소규모, 플레이 체감 영향 미미)<br><br>
+            위 기법들을 통해 모바일 환경에서도 안정적인 성능 확보.<br><br>
+            구조적으로 확장성(새 행성/스킬/유닛 추가)을 고려하여 설계 → 실제 상용 프로젝트에도 적용 가능.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
+
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/WebGLBuild.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/WebGLBuild.data.unityweb",
+        frameworkUrl: buildUrl + "/WebGLBuild.framework.js.unityweb",
+        codeUrl: buildUrl + "/WebGLBuild.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "CultureLab",
+        productName: "MarineUpbringing",
+        productVersion: "0.1",
+        showBanner: unityShowBanner,
+      };
+
+      // By default, Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      // If you would like all file writes inside Unity Application.persistentDataPath
+      // directory to automatically persist so that the contents are remembered when
+      // the user revisits the site the next time, uncomment the following line:
+      // config.autoSyncPersistentDataPath = true;
+      // This autosyncing is currently not the default behavior to avoid regressing
+      // existing user projects that might rely on the earlier manual
+      // JS_FileSystem_Sync() behavior, but in future Unity version, this will be
+      // expected to change.
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
+
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+
+
+      } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
+        // Canvas size will be handled by CSS for responsive design
+      }
+
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+              }).then((unityInstance) => {
+                loadingBar.style.display = "none";
+                fullscreenButton.onclick = () => {
+                  unityInstance.SetFullscreen(1);
+                };
+              }).catch((message) => {
+                alert(message);
+              });
+            };
+
+      document.body.appendChild(script);
+
+    </script>
+  </body>
+</html>
