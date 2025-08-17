@@ -16,8 +16,8 @@
       body {
         font-family: 'Arial', sans-serif;
         overflow: hidden;
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-        color: #ffffff;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1f1f1f 100%);
+        color: #e0e0e0;
         position: relative;
       }
 
@@ -29,9 +29,9 @@
         width: 100%;
         height: 100%;
         background: 
-          radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-          radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+          radial-gradient(circle at 20% 80%, rgba(192, 192, 192, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(169, 169, 169, 0.06) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(128, 128, 128, 0.04) 0%, transparent 50%);
         pointer-events: none;
         z-index: -1;
       }
@@ -48,8 +48,10 @@
         width: calc(100vh * 2 / 3); /* 2:1 aspect ratio based on height */
         position: relative;
         background: linear-gradient(45deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-        border-right: 2px solid rgba(0, 255, 255, 0.3);
-        box-shadow: inset 0 0 50px rgba(0, 255, 255, 0.1);
+        border-right: 3px solid rgba(192, 192, 192, 0.6);
+        box-shadow: 
+          inset 0 0 30px rgba(192, 192, 192, 0.1),
+          0 0 20px rgba(192, 192, 192, 0.1);
       }
 
       #unity-container {
@@ -71,26 +73,27 @@
         display: flex;
         flex-direction: column;
         background: linear-gradient(135deg, 
-          rgba(26, 26, 46, 0.95) 0%, 
-          rgba(22, 33, 62, 0.95) 50%, 
-          rgba(15, 15, 35, 0.95) 100%);
+          rgba(35, 35, 35, 0.95) 0%, 
+          rgba(30, 30, 30, 0.95) 50%, 
+          rgba(25, 25, 25, 0.95) 100%);
         backdrop-filter: blur(10px);
-        border-left: 1px solid rgba(0, 255, 255, 0.2);
+        border-left: 2px solid rgba(192, 192, 192, 0.5);
+        box-shadow: inset 0 0 20px rgba(192, 192, 192, 0.05);
       }
 
       .creator-info {
         background: linear-gradient(135deg, 
-          rgba(0, 255, 255, 0.1) 0%, 
-          rgba(120, 119, 198, 0.1) 50%, 
-          rgba(255, 119, 198, 0.1) 100%);
-        border-radius: 15px;
+          rgba(192, 192, 192, 0.08) 0%, 
+          rgba(169, 169, 169, 0.06) 50%, 
+          rgba(128, 128, 128, 0.04) 100%);
+        border-radius: 8px;
         padding: 20px;
         margin: 20px;
-        border: 1px solid rgba(0, 255, 255, 0.3);
+        border: 1px solid rgba(192, 192, 192, 0.3);
         backdrop-filter: blur(15px);
         box-shadow: 
-          0 0 20px rgba(0, 255, 255, 0.2),
-          inset 0 0 20px rgba(0, 255, 255, 0.05);
+          0 0 10px rgba(192, 192, 192, 0.15),
+          inset 0 0 10px rgba(192, 192, 192, 0.05);
         position: relative;
         overflow: hidden;
       }
@@ -102,8 +105,8 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-        animation: shimmer 3s infinite;
+        background: linear-gradient(90deg, transparent, rgba(192, 192, 192, 0.08), transparent);
+        animation: shimmer 4s infinite;
       }
 
       @keyframes shimmer {
@@ -114,8 +117,8 @@
       .creator-info h2 {
         font-size: 1.3rem;
         margin-bottom: 10px;
-        color: #00ffff;
-        text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        color: #c0c0c0;
+        text-shadow: 0 0 4px rgba(192, 192, 192, 0.4);
         font-weight: bold;
         letter-spacing: 1px;
       }
@@ -123,14 +126,14 @@
       .creator-info p {
         font-size: 0.9rem;
         line-height: 1.4;
-        color: #b0e0e6;
-        text-shadow: 0 0 5px rgba(176, 224, 230, 0.3);
+        color: #e0e0e0;
+        text-shadow: 0 0 3px rgba(224, 224, 224, 0.3);
       }
 
       .portfolio-top {
         flex: 1;
         padding: 20px;
-        border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+        border-bottom: 2px solid rgba(192, 192, 192, 0.4);
         overflow-y: auto;
       }
 
@@ -144,10 +147,10 @@
         font-size: 1.8rem;
         font-weight: bold;
         margin-bottom: 20px;
-        color: #00ffff;
+        color: #c0c0c0;
         text-shadow: 
-          0 0 10px rgba(0, 255, 255, 0.5),
-          0 0 20px rgba(0, 255, 255, 0.3);
+          0 0 5px rgba(192, 192, 192, 0.4),
+          0 0 10px rgba(192, 192, 192, 0.2);
         letter-spacing: 2px;
         position: relative;
       }
@@ -161,68 +164,68 @@
         height: 2px;
         background: linear-gradient(90deg, 
           transparent 0%, 
-          #00ffff 20%, 
-          #ff77c6 50%, 
-          #00ffff 80%, 
+          #c0c0c0 20%, 
+          #808080 50%, 
+          #c0c0c0 80%, 
           transparent 100%);
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        box-shadow: 0 0 5px rgba(192, 192, 192, 0.3);
       }
 
       .notice-text {
         background: linear-gradient(135deg, 
-          rgba(255, 0, 0, 0.1) 0%, 
-          rgba(255, 50, 50, 0.1) 100%);
-        color: #ff4444;
+          rgba(192, 192, 192, 0.1) 0%, 
+          rgba(169, 169, 169, 0.08) 100%);
+        color: #c50606;
         padding: 12px 15px;
         margin-bottom: 20px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 0, 0, 0.3);
+        border-radius: 6px;
+        border: 1px solid rgba(175, 175, 175, 0.4);
         font-size: 0.9rem;
         font-weight: bold;
         text-align: center;
-        text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+        text-shadow: 0 0 3px rgba(211, 211, 211, 0.3);
         box-shadow: 
-          0 0 10px rgba(255, 0, 0, 0.2),
-          inset 0 0 10px rgba(255, 0, 0, 0.05);
-        animation: pulse 2s infinite;
+          0 0 8px rgba(192, 192, 192, 0.2),
+          inset 0 0 5px rgba(192, 192, 192, 0.05);
+        animation: pulse 3.5s infinite;
       }
 
       @keyframes pulse {
         0%, 100% { 
           box-shadow: 
-            0 0 10px rgba(255, 0, 0, 0.2),
-            inset 0 0 10px rgba(255, 0, 0, 0.05);
+            0 0 8px rgba(192, 192, 192, 0.2),
+            inset 0 0 5px rgba(192, 192, 192, 0.05);
         }
         50% { 
           box-shadow: 
-            0 0 15px rgba(255, 0, 0, 0.4),
-            inset 0 0 15px rgba(255, 0, 0, 0.1);
+            0 0 12px rgba(192, 192, 192, 0.3),
+            inset 0 0 8px rgba(192, 192, 192, 0.08);
         }
       }
 
       .content-card {
         background: linear-gradient(135deg, 
-          rgba(0, 255, 255, 0.05) 0%, 
-          rgba(120, 119, 198, 0.05) 50%, 
-          rgba(255, 119, 198, 0.05) 100%);
-        border-radius: 15px;
+          rgba(192, 192, 192, 0.08) 0%, 
+          rgba(169, 169, 169, 0.06) 50%, 
+          rgba(128, 128, 128, 0.04) 100%);
+        border-radius: 8px;
         padding: 15px;
         margin-bottom: 15px;
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(0, 255, 255, 0.2);
+        border: 1px solid rgba(192, 192, 192, 0.25);
         box-shadow: 
-          0 0 15px rgba(0, 255, 255, 0.1),
-          inset 0 0 15px rgba(0, 255, 255, 0.02);
+          0 0 8px rgba(192, 192, 192, 0.15),
+          inset 0 0 8px rgba(192, 192, 192, 0.05);
         position: relative;
         transition: all 0.3s ease;
       }
 
       .content-card:hover {
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         box-shadow: 
-          0 5px 25px rgba(0, 255, 255, 0.2),
-          inset 0 0 20px rgba(0, 255, 255, 0.05);
-        border-color: rgba(0, 255, 255, 0.4);
+          0 3px 12px rgba(192, 192, 192, 0.25),
+          inset 0 0 12px rgba(192, 192, 192, 0.08);
+        border-color: rgba(192, 192, 192, 0.4);
       }
 
       .content-card::before {
@@ -234,16 +237,16 @@
         height: 1px;
         background: linear-gradient(90deg, 
           transparent 0%, 
-          #00ffff 50%, 
+          #c0c0c0 50%, 
           transparent 100%);
-        opacity: 0.5;
+        opacity: 0.4;
       }
 
       .content-card h3 {
         font-size: 1.2rem;
         margin-bottom: 10px;
-        color: #00ffff;
-        text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+        color: #c0c0c0;
+        text-shadow: 0 0 6px rgba(192, 192, 192, 0.5);
         font-weight: bold;
         letter-spacing: 1px;
       }
@@ -251,13 +254,13 @@
       .content-card p {
         font-size: 0.9rem;
         line-height: 1.4;
-        color: #e0f7fa;
-        text-shadow: 0 0 3px rgba(224, 247, 250, 0.2);
+        color: #e0e0e0;
+        text-shadow: 0 0 2px rgba(224, 224, 224, 0.2);
       }
 
       .content-card strong {
-        color: #ff77c6;
-        text-shadow: 0 0 5px rgba(255, 119, 198, 0.3);
+        color: #d3d3d3;
+        text-shadow: 0 0 4px rgba(211, 211, 211, 0.3);
       }
 
       .tech-stack {
@@ -269,21 +272,21 @@
 
       .tech-tag {
         background: linear-gradient(135deg, 
-          rgba(0, 255, 255, 0.2) 0%, 
-          rgba(120, 119, 198, 0.2) 100%);
-        color: #00ffff;
+          rgba(192, 192, 192, 0.15) 0%, 
+          rgba(169, 169, 169, 0.12) 100%);
+        color: #c0c0c0;
         padding: 4px 10px;
-        border-radius: 15px;
+        border-radius: 6px;
         font-size: 0.8rem;
-        border: 1px solid rgba(0, 255, 255, 0.4);
-        box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
-        text-shadow: 0 0 3px rgba(0, 255, 255, 0.5);
+        border: 1px solid rgba(192, 192, 192, 0.4);
+        box-shadow: 0 0 4px rgba(192, 192, 192, 0.2);
+        text-shadow: 0 0 2px rgba(192, 192, 192, 0.3);
         transition: all 0.3s ease;
       }
 
       .tech-tag:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+        transform: scale(1.02);
+        box-shadow: 0 0 6px rgba(192, 192, 192, 0.3);
       }
 
       /* Unity loading bar adjustments */
@@ -314,20 +317,20 @@
 
       .portfolio-top::-webkit-scrollbar-track,
       .portfolio-bottom::-webkit-scrollbar-track {
-        background: rgba(0, 255, 255, 0.1);
+        background: rgba(192, 192, 192, 0.15);
         border-radius: 4px;
       }
 
       .portfolio-top::-webkit-scrollbar-thumb,
       .portfolio-bottom::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #00ffff, #ff77c6);
+        background: linear-gradient(180deg, #c0c0c0, #808080);
         border-radius: 4px;
-        box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+        box-shadow: 0 0 3px rgba(192, 192, 192, 0.3);
       }
 
       .portfolio-top::-webkit-scrollbar-thumb:hover,
       .portfolio-bottom::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(180deg, #ff77c6, #00ffff);
+        background: linear-gradient(180deg, #808080, #c0c0c0);
       }
     </style>
   </head>
@@ -361,10 +364,10 @@
       
         <!-- Top section - Game Concept -->
         <div class="portfolio-top">
-          <h1 class="section-title">🎮 게임 기획</h1>
+          <h1 class="section-title">게임 기획</h1>
           <div class="creator-info">
             <h2>제작자 : 송병근 (1인 개발)</h2>
-            <p>모바일 앱 기준 개발 및 최적화를 진행한 프로젝트로, 부득이하게 현 WebGL 환경에서는 특성상 예기치 않은 오류나 큰 성능 저하가 발생할 수 있습니다. 
+            <p>모바일 앱 기준 개발 및 최적화를 진행한 프로젝트로, 부득이하게 현 WebGL 환경에서는 특성상 예기치 않은 오류나 성능 저하가 발생할 수 있습니다. 
               </p>
             <p>아직 개발되지 않은 요소가 많습니다. 양해 부탁드립니다.</p>
           </div>
@@ -374,7 +377,7 @@
 
           
           <div class="content-card">
-            <h3>📌 프로젝트 개요</h3>
+            <h3>1. 프로젝트 개요</h3>
             <p><strong>개발자:</strong> 송병근 (개인 프로젝트)<br>
             <strong>장르:</strong> 모바일 오펜스(적 뚫기)<br>
             <strong>참고 리소스:</strong> 컨셉 전달을 위해 스타크래프트 리소스 활용 (상용 아님)<br>
@@ -382,15 +385,15 @@
           </div>
 
           <div class="content-card">
-            <h3>🎮 게임 컨셉</h3>
+            <h3>2. 게임 컨셉</h3>
             <p>괴물로 가득한 낯선 행성에 도착한 플레이어.<br>
             다양한 미션(보스 제거, 본거지 파괴, 시민 구출, 거점 방어 등)을 수행하며 행성을 정화해 나간다.<br><br>
-            목표는 적의 근거지를 뚫고 파괴하는 것.<br>
-            조작은 직관적이며, 스킬 활용과 전략적인 플레이를 요구한다.</p>
+            현 목표는 적의 근거지를 뚫고 파괴하는 것.<br>
+            스킬 활용과 전략적인 플레이를 요구하며, 플레이어의 기량에 따라 클리어 여부가 결정된다.<br><br></p>
           </div>
 
           <div class="content-card">
-            <h3>🕹 게임 플레이</h3>
+            <h3>3. 게임 플레이</h3>
             <p><strong>조작 방식</strong><br>
             • 가상 조이스틱 기반 이동<br>
             • 조이스틱을 최대치로 당김 → 달리기 상태<br>
@@ -398,24 +401,24 @@
             &nbsp;&nbsp;→ 움직이며 동시에 공격 가능<br><br>
             <strong>승리 조건</strong><br>
             • 모든 적 처치<br>
-            • 적의 본거지(예: 해처리)를 직접 폭파 또는 미사일 스킬로 파괴</p>
+            • 적의 본거지(예: 해처리)를 직접 접근하여 폭파 또는 미사일 스킬로 파괴</p>
           </div>
 
           <div class="content-card">
-            <h3>⚔️ 스킬 시스템</h3>
+            <h3>4. 스킬 시스템</h3>
             <p><strong>스팀팩</strong><br>
             • 공격 속도 및 이동 속도 증가<br>
             • 동시에 두 마리의 적 공격 가능<br><br>
-            <strong>탈 것 소환</strong><br>
+            <strong>이동수단 호출</strong><br>
             • 다수의 적에게 포위당했을 때 탈출용<br>
             • 생존 및 위치 재정비에 유용<br><br>
-            <strong>미사일 지정</strong><br>
+            <strong>미사일 투하</strong><br>
             • 드래그 & 드롭으로 투하 지점 지정<br>
             • 강력한 화력 + 광역 공격</p>
           </div>
 
           <div class="content-card">
-            <h3>💰 성장 요소</h3>
+            <h3>5. 성장 요소</h3>
             <p>게임 내 재화(골드 등)를 사용해:<br>
             • 추가 스킬 해금<br>
             • 유닛 업그레이드<br><br>
@@ -423,9 +426,9 @@
           </div>
 
           <div class="content-card">
-            <h3>🚀 확장성 / 특징</h3>
+            <h3>6. 확장성 / 특징</h3>
             <p><strong>플레이 루프:</strong> 탐험 → 전투 → 미션 : 보스/본거지 파괴, 시민 구출, 거점 방어 등 → 보상 → 다음 행성<br><br>
-            <strong>전략적 선택:</strong> 탈 것(오토바이, 전투로봇), 생존 스킬(탈출, 버프)과 공격 스킬(광역 화력, 단일 대상 화력)을 상황에 맞게 활용<br><br>
+            <strong>전략적 선택:</strong> 이동수단(오토바이, 전투로봇 등), 생존 스킬(탈출, 버프)과 공격 스킬(광역 화력, 단일 대상 화력)을 상황에 맞게 활용<br><br>
             <strong>확장 방향:</strong><br>
             • 다양한 행성/맵 추가<br>
             • 미션 추가<br>
@@ -438,7 +441,7 @@
         <!-- Bottom section - Development -->
         <div class="portfolio-bottom">
           
-          <h2 class="section-title">🎨 개발 특징</h2>
+          <h2 class="section-title">개발 특징</h2>
           <div class="content-card">
             <p><strong>1. 반응형 UI 구현</strong><br>
             다양한 해상도와 화면 비율을 지원하기 위해 Canvas Scaler와 Anchoring을 활용하여 반응형 UI 설계.<br><br>
@@ -447,7 +450,7 @@
           </div>
 
           
-          <h2 class="section-title">⚡ 최적화 기법</h2>
+          <h2 class="section-title">최적화 기법</h2>
           <div class="content-card"> 
             <h3>1. 에셋 캐싱 & Addressables</h3>
             <p>반복적으로 호출되는 애니메이션/이미지는 캐싱 처리하여 불필요한 디스크 접근 방지.<br><br>
@@ -482,16 +485,8 @@
             <strong>Changeable:</strong> 수치 변동 요소 (체력, 골드 등)<br>
             <strong>Popup:</strong> 이벤트 발생 시에만 생성<br>
             <strong>Interactable:</strong> 버튼 등 입력 요소<br><br>
+            <strong>Navigation:</strong> 미션 목표 추적과 같은 네비게이션 요소<br><br>
             불필요한 전체 Rebuild 방지로 렌더링 최적화.</p>
-          </div>
-
-          <div class="content-card">
-            <h3>6. Prefab 역할 세분화</h3>
-            <p>프리팹을 목적에 따라 구체적으로 구분:<br><br>
-            <strong>Collision 전용</strong> (Physics)<br>
-            <strong>Sprite 전용</strong> (시각적 표현)<br>
-            <strong>Pathfinding 전용</strong> (경로 계산 AI)<br><br>
-            필요 시 동적으로 생성/해제 → 유지보수 용이 및 추후 기능 확장 대비.</p>
           </div>
 
           <div class="content-card">
